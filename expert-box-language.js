@@ -130,26 +130,27 @@ expertBoxLanguage.service('ebLanguage', ['$log', '$q', '$resource',
 }]);
 
 //translates collections and keys in the loaded language
-expertBoxLanguage.filter('translated', ['$log', '_', 'ebTranslation', '$q', function ($log, _, ebTranslation, $q) {
+expertBoxLanguage.filter('translated', ['$log', '_', 'ebLanguage', '$q', 
+                                        function ($log, _, ebLanguage, $q) {
     var filterFn = function (items) {
         $log.debug('translated filter not available yet');
         return undefined;
     };
 
-    $q.when(ebTranslation.translations).then(function () {
+    $q.when(ebLanguage.translations).then(function (translations) {
         $log.debug('translated filter is available');
         filterFn = function (items) {
             $log.debug('using translated filter');
             if (_.isArray(items) || _.isObject(items)) {
                 //$log.debug('translated filter: array or object');
                 return _.map(items, function (item) {
-                    return ebTranslation.get(item);
+                    return translations[item];
                 });
             }
             else if (_.isString(items)) {
                 //$log.debug('translated filter: string');
                 var item = items;
-                return ebTranslation.get(item);
+                return translations[item];
             }
             else
                 return items;

@@ -73,7 +73,7 @@ expertBoxLanguage.service('ebLanguage', ['$log', '$q', '$resource',
   //  plural: translation key for plural form of the noun/unit
   //return promise until translations are resolved    
   self.measurement = function (number, singular, plural) {
-    $log.debug('requesting measurement '+number+' '+singular+' '+plural);  
+    //$log.debug('requesting measurement '+number+' '+singular+' '+plural);  
     var defer = $q.defer();
     $q.when(self.translations).then(function () {
       //$log.debug('translation resolved');  

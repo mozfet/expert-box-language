@@ -39,30 +39,27 @@ expertBoxLanguage.service('ebLanguage', ['$log', '$q', '$resource',
   //form a noun as singular or plural according to a number
   //return promise until translations are resolved
   self.formNoun = function (number, singular, plural) {
-      $log.debug('ebLanguage.formNoun');
+      $log.debug('formNoun requested for '+number+' '+singular+' '+plural);
 
-      var defer = $q.defer();
-      var promise = defer.promise;
-      
+      var defer = $q.defer();      
       $q.when(self.translations).then(function (translations) {        
-        $log.debug('ebLanguage.formNoun : when translations then');
-
         if (angular.isUndefined(number) || angular.isUndefined(singular) || angular.isUndefined(plural)) {
-            var msg = 'ebLanguage.formNoun input validation failed'
+            var msg = 'formNoun input validation failed'
             $log.error(msg);
             defer.reject(msg);
         }
         else if (number<2) {
-          $log.debug('ebLanguage.formNoun resolves as '+translations[singular]);
-          defer.resolve(translations[singular]);
+          var res = translations[singular];
+          $log.debug('formNoun '+number+' resolves as '+res);
+          defer.resolve(res);
         }
         else {
-          $log.debug('ebLanguage.formNoun resolves as '+translations[plural]);
-          defer.resolve(translations[plural]);
+          var res = translations[plural];
+          $log.debug('formNoun '+number+' resolves as '+res);
+          defer.resolve(res);
         }
       });
-      $log.debug(promise);
-      return promise;
+      return defer.promise;
   };
 
   //translates a measurement with formed noun (singular/plural) units
@@ -76,22 +73,25 @@ expertBoxLanguage.service('ebLanguage', ['$log', '$q', '$resource',
   //  plural: translation key for plural form of the noun/unit
   //return promise until translations are resolved    
   self.measurement = function (number, singular, plural) {
-      var deferred = $q.defer();
-      $q.when(self.translations).then(function () {
-          if (angular.isUndefined(number) || angular.isUndefined(singular) || angular.isUndefined(plural)) {
-              deferred.reject('measurement input validation failed');
-          }
-          $q.when(self.formNoun(number, singular, plural)).then(function(noun) {
-              deferred.resolve(number+' '+noun);
-          });            
+    $log.debug('requesting measurement '+number+' '+singular+' '+plural);  
+    var defer = $q.defer();
+    $q.when(self.translations).then(function () {
+      $log.debug('translation resolved');  
+      if (angular.isUndefined(number) || angular.isUndefined(singular) || angular.isUndefined(plural)) {
+          defer.reject('measurement input validation failed');
+      }
+      $q.when(self.formNoun(number, singular, plural)).then(function(noun) {
+          $log.debug('measurement formNoun '+number+' '+singular+' '+plural+' resolved to '+noun);
+          defer.resolve(number+' '+noun);
       });
-      return deferred.promise;
+    });
+    return defer.promise;
   };
 
   //creates a comma seperated list of translated items, with last item joined by conjective add translation
   //argument items should be an array of strings
   self.list = function (items) {
-      var deferred = $q.defer();
+      var defer = $q.defer();
       $q.when(translations).then(function () {
           var strings = _.map(items, function (item) {
               var translation = translations[item];
@@ -110,9 +110,9 @@ expertBoxLanguage.service('ebLanguage', ['$log', '$q', '$resource',
               lastString = ' ' + translations.AND + ' ' + _.last(strings);
           }
 
-          deferred.resolve(firstString + midString + lastString);
+          defer.resolve(firstString + midString + lastString);
       });
-      return deferred.promise;
+      return defer.promise;
   };
 
   self.getTranslation = function(key) {

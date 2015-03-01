@@ -9,11 +9,11 @@ expertBoxLanguage.service('ebLanguage', ['$log', '$q', '$resource',
 
   //function to load a set of translations for language code
   self.load = function(code) {
-    $log.debug('language.load ' + code);
+    //$log.debug('language.load ' + code);
 
     //create language file resource
     var languageFilePath = 'translation/' + code.toLowerCase() + '.json';
-    $log.debug('languageFilePath is '+languageFilePath);
+    //$log.debug('languageFilePath is '+languageFilePath);
     var resource = $resource(languageFilePath,null, {
       'query': {
           method:'GET',
@@ -26,20 +26,20 @@ expertBoxLanguage.service('ebLanguage', ['$log', '$q', '$resource',
     var defer = $q.defer();
     self.translations = resource.query(function(data) {
       self.translations = data;
-      $log.debug('ebLanguage.load.query.callback : self.translations = ...');
-      $log.debug(self.translations);
+      //$log.debug('ebLanguage.load.query.callback : self.translations = ...');
+      //$log.debug(self.translations);
     }).$promise;
 
     //return promise to resolve after translations is recieved and stored
-    $log.debug('ebLanguage.load : self.translations = ...');
-    $log.debug(self.translations);
+    //$log.debug('ebLanguage.load : self.translations = ...');
+    //$log.debug(self.translations);
     return self.translations;
   };
 
   //form a noun as singular or plural according to a number
   //return promise until translations are resolved
   self.formNoun = function (number, singular, plural) {
-      $log.debug('formNoun requested for '+number+' '+singular+' '+plural);
+      //$log.debug('formNoun requested for '+number+' '+singular+' '+plural);
 
       var defer = $q.defer();      
       $q.when(self.translations).then(function (translations) {        
@@ -50,12 +50,12 @@ expertBoxLanguage.service('ebLanguage', ['$log', '$q', '$resource',
         }
         else if (number<2) {
           var res = translations[singular];
-          $log.debug('formNoun '+number+' resolves as '+res);
+          //$log.debug('formNoun '+number+' resolves as '+res);
           defer.resolve(res);
         }
         else {
           var res = translations[plural];
-          $log.debug('formNoun '+number+' resolves as '+res);
+          //$log.debug('formNoun '+number+' resolves as '+res);
           defer.resolve(res);
         }
       });
@@ -76,12 +76,12 @@ expertBoxLanguage.service('ebLanguage', ['$log', '$q', '$resource',
     $log.debug('requesting measurement '+number+' '+singular+' '+plural);  
     var defer = $q.defer();
     $q.when(self.translations).then(function () {
-      $log.debug('translation resolved');  
+      //$log.debug('translation resolved');  
       if (angular.isUndefined(number) || angular.isUndefined(singular) || angular.isUndefined(plural)) {
           defer.reject('measurement input validation failed');
       }
       $q.when(self.formNoun(number, singular, plural)).then(function(noun) {
-          $log.debug('measurement formNoun '+number+' '+singular+' '+plural+' resolved to '+noun);
+          //$log.debug('measurement formNoun '+number+' '+singular+' '+plural+' resolved to '+noun);
           defer.resolve(number+' '+noun);
       });
     });
@@ -124,7 +124,7 @@ expertBoxLanguage.service('ebLanguage', ['$log', '$q', '$resource',
   };
 
   //init language service
-  $log.debug('init language service');
+  //$log.debug('init language service');
   var deferred = $q.defer();
   self.translations = deferred.promise;
 }]);
@@ -133,14 +133,14 @@ expertBoxLanguage.service('ebLanguage', ['$log', '$q', '$resource',
 expertBoxLanguage.filter('translated', ['$log', '_', 'ebLanguage', '$q', 
                                         function ($log, _, ebLanguage, $q) {
     var filterFn = function (items) {
-        $log.debug('translated filter not available yet');
+        //$log.debug('translated filter not available yet');
         return undefined;
     };
 
     $q.when(ebLanguage.translations).then(function (translations) {
-        $log.debug('translated filter is available');
+        //$log.debug('translated filter is available');
         filterFn = function (items) {
-            $log.debug('using translated filter');
+            //$log.debug('using translated filter');
             if (_.isArray(items) || _.isObject(items)) {
                 //$log.debug('translated filter: array or object');
                 return _.map(items, function (item) {

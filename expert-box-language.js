@@ -9,8 +9,6 @@ expertBoxLanguage.service('ebLanguage', ['$log', '$q', '$resource',
 
   //function to load a set of translations for language code
   self.load = function(code) {
-    $log.debug('language.load ' + code);
-
     //create language file resource
     var languageFilePath = 'translation/' + code.toLowerCase() + '.json';
     //$log.debug('languageFilePath is '+languageFilePath);

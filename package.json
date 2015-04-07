@@ -4,17 +4,17 @@
   "version": "0.0.1",
   "description": "Internationalisation module for AngularJS that provides translation services.",
   "repository": "https://github.com/mozfet/expert-box-language.git",
+  "main": "expert-box-language.js",
   "license": "MIT",
+  "author": "Wynand Vermeulen",
   "devDependencies": {
     "bower": "^1.3.1",
-    "karma": "~0.10"
+    "jasmine-core": "^2.2.0",
+    "karma-jasmine": "^0.3.5",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "phantomjs": "^1.9.16"
   },
   "scripts": {
-    "postinstall": "bower install",
-    "prestart": "npm install",
-    "start": "http-server -a localhost -p 8000",
-    "pretest": "npm install",
-    "test": "karma start test/karma.conf.js",
-    "test-single-run": "karma start test/karma.conf.js  --single-run"
+    "test": "karma start test/karma.conf.js"
   }
 }

@@ -68,8 +68,8 @@ describe('expert-box-language', function() {
 				}
 			};
 
-			spyOn(tests, 'success').andCallThrough();
-			spyOn(tests, 'failure').andCallThrough();
+			spyOn(tests, 'success').and.callThrough();
+			spyOn(tests, 'failure').and.callThrough();
 
 			var formNoun = ebLanguage.formNoun(1,'BEER','BEERS');
 			$q.when(formNoun).then(tests.success).catch(tests.failure).finally(done);
@@ -99,8 +99,8 @@ describe('expert-box-language', function() {
 				}
 			};
 
-			spyOn(tests, 'success').andCallThrough();
-			spyOn(tests, 'failure').andCallThrough();
+			spyOn(tests, 'success').and.callThrough();
+			spyOn(tests, 'failure').and.callThrough();
 
 			var formNoun = ebLanguage.formNoun(2,'BEER','BEERS');
 			$q.when(formNoun).then(tests.success).catch(tests.failure).finally(done);
@@ -130,8 +130,8 @@ describe('expert-box-language', function() {
 				}
 			};
 
-			spyOn(tests, 'success').andCallThrough();
-			spyOn(tests, 'failure').andCallThrough();
+			spyOn(tests, 'success').and.callThrough();
+			spyOn(tests, 'failure').and.callThrough();
 
 			var measurement = ebLanguage.measurement(1,'BEER','BEERS');
 			$q.when(measurement).then(tests.success).catch(tests.failure).finally(done);
@@ -161,8 +161,8 @@ describe('expert-box-language', function() {
 				}
 			};
 
-			spyOn(tests, 'success').andCallThrough();
-			spyOn(tests, 'failure').andCallThrough();
+			spyOn(tests, 'success').and.callThrough();
+			spyOn(tests, 'failure').and.callThrough();
 
 			var measurement = ebLanguage.measurement(2,'BEER','BEERS');
 			$q.when(measurement).then(tests.success).catch(tests.failure).finally(done);

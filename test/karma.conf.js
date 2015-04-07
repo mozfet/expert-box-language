@@ -12,7 +12,7 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
 
 
-    // list of files / patterns to load in the browser
+    // list of files to load in the browser
     files: [
       'bower_components/angular/angular.js',
       'bower_components/angular-loader/angular-loader.js',

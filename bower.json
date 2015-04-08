@@ -1,7 +1,7 @@
 {
   "name": "expert-box-language",
   "main": "expert-box-language.js",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "authors": [
     "Wynand Vermeulen <wynand@expertbox.com>"
   ],
